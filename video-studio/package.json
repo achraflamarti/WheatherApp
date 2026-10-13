@@ -1,0 +1,19 @@
+{
+  "name": "video-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Make short vertical 3D dialogue videos from a script file. Every frame is a pure function of time.",
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs",
+    "dev": "node render.mjs --dev",
+    "sheet": "node render.mjs --sheet",
+    "check": "node render.mjs --check"
+  },
+  "dependencies": {
+    "@fontsource/inter": "5.3.0",
+    "@fontsource/jetbrains-mono": "5.3.0",
+    "playwright": "1.56.1",
+    "three": "0.186.1"
+  }
+}

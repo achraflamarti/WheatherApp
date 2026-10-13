@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Video Studio</title>
+    <style>
+      @font-face { font-family: 'Inter'; font-weight: 400; src: url('node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'Inter'; font-weight: 500; src: url('node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'Inter'; font-weight: 600; src: url('node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'Inter'; font-weight: 700; src: url('node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'JetBrains Mono'; font-weight: 500; src: url('node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'JetBrains Mono'; font-weight: 700; src: url('node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2') format('woff2'); }
+      html, body { margin: 0; background: #07060d; color: #d9d6ee; font: 14px Inter, system-ui, sans-serif; }
+      #out { display: block; }
+      body.player #out { height: calc(100vh - 72px); width: auto; margin: 12px auto 0; border-radius: 10px; }
+      #bar { display: flex; gap: 12px; align-items: center; max-width: 720px; margin: 10px auto; padding: 0 16px; }
+      #bar[hidden] { display: none; }
+      #bar input { flex: 1; }
+      #bar button { font: 600 14px Inter, sans-serif; padding: 6px 16px; border-radius: 8px; border: 0; background: #e2583a; color: #fff; cursor: pointer; }
+      #time { font-variant-numeric: tabular-nums; min-width: 230px; color: #9a96b8; }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./node_modules/three/build/three.module.js",
+          "three/addons/": "./node_modules/three/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <canvas id="out"></canvas>
+    <div id="bar" hidden>
+      <button id="play">Play</button>
+      <input id="scrub" type="range" min="0" max="1000" value="0" />
+      <span id="time"></span>
+    </div>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "title": "Weather app promo",
+  "video": { "fps": 30, "width": 1080, "height": 1920 },
+
+  "characters": {
+    "sam": { "type": "human", "voice": "en-US-AndrewNeural", "pitch": 140 },
+    "buddy": { "type": "buddy", "voice": "en-US-AnaNeural", "pitch": 300, "timbre": "bright",
+      "colors": { "body": "#3fa7ea" } }
+  },
+
+  "audio": {
+    "voices": "babble",
+    "tts": "edge-tts --voice {voice} --text {text} --write-media {out}"
+  },
+
+  "screen": {
+    "title": "Weather App · 1 search running",
+    "ask": "Search a city…",
+    "panels": [
+      { "id": "search", "title": "Weather · search", "bubble": "Paris", "model": "index.html",
+        "lines": ["city: …", "waiting for input"] },
+      { "id": "api", "title": "OpenWeatherMap", "bubble": "GET /weather", "model": "api",
+        "lines": ["q={city}", "units=metric"] },
+      { "id": "result", "title": "Weather · result", "bubble": "Show it", "model": "script.js",
+        "lines": ["temp: …", "sky: …"] },
+      { "id": "theme", "title": "Weather · background", "bubble": "Match the mood", "model": "style.css",
+        "lines": ["< 10°C  cold photo", "> 10°C  warm photo"] },
+      { "id": "code", "title": "script.js", "bubble": "26 lines", "model": "vanilla js",
+        "lines": ["fetch(apiUrl)", ".then(r => r.json())"] },
+      { "id": "ship", "title": "Deploy", "bubble": "Ship it", "model": "github",
+        "lines": ["git push", "live"] }
+    ]
+  },
+
+  "lines": [
+    { "who": "sam", "text": "Do I need an umbrella today?", "mood": "curious" },
+    { "who": "buddy", "text": "Type your city. I'll ask the weather service.", "mood": "happy",
+      "screen": { "panel": "search", "bubble": "Paris", "type": ["city: Paris", "GET openweathermap.org"] } },
+    { "who": "buddy", "text": "Fourteen degrees and light rain in Paris.",
+      "screen": { "panel": "result", "bubble": "Show it", "type": ["temp: 14°C", "sky: light rain"] } },
+    { "who": "sam", "text": "Wait, the background just changed?", "mood": "surprised" },
+    { "who": "buddy", "text": "Cold days get a cold photo. Warm days get a warm one.", "mood": "calm",
+      "screen": { "panel": "theme", "bubble": "Match the mood", "type": ["< 10°C  cold photo", "> 10°C  warm photo"] } },
+    { "who": "sam", "text": "All that in twenty-six lines of JavaScript?", "mood": "skeptical", "shot": "two" },
+    { "who": "buddy", "text": "One fetch call. That's the whole trick.", "mood": "happy", "gesture": "hop",
+      "screen": { "panel": "code", "bubble": "26 lines", "type": ["fetch(apiUrl)", ".then(r => r.json())", "→ 14°C, light rain"] } },
+    { "who": "sam", "text": "Okay. Umbrella it is.", "mood": "happy", "gesture": "point" }
+  ]
+}

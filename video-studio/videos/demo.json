@@ -1,0 +1,58 @@
+{
+  "title": "How this video was made",
+  "video": { "fps": 30, "width": 1080, "height": 1920 },
+
+  "characters": {
+    "sam": { "type": "human", "voice": "en-US-AndrewNeural", "pitch": 140 },
+    "buddy": { "type": "buddy", "voice": "en-US-AnaNeural", "pitch": 300, "timbre": "bright" }
+  },
+
+  "audio": {
+    "voices": "babble",
+    "tts": "edge-tts --voice {voice} --text {text} --write-media {out}",
+    "music": null,
+    "musicVolume": 0.18
+  },
+
+  "screen": {
+    "title": "Main canvas · 6 agents running",
+    "ask": "Ask the agent…",
+    "panels": [
+      { "id": "script", "title": "Studio · script", "bubble": "Write the dialogue", "model": "script.json",
+        "lines": ["videos/demo.json", "2 characters", "13 lines"] },
+      { "id": "render", "title": "Studio · renderer", "bubble": "Draw frame t", "model": "three.js",
+        "lines": ["renderFrame(t)", "t = {t}s", "frame {frame} / {frames}"] },
+      { "id": "rules", "title": "Studio · rules", "bubble": "Keep it exact", "model": "deterministic",
+        "lines": ["No clock reads", "No Math.random()", "Same t, same pixels"] },
+      { "id": "voices", "title": "Studio · voices", "bubble": "Give them voices", "model": "tts",
+        "lines": ["Sam: low voice", "Buddy: high voice", "Captions: synced"] },
+      { "id": "capture", "title": "Studio · capture", "bubble": "Save every frame", "model": "playwright",
+        "lines": ["Headless Chromium", "frame {frame}.png"] },
+      { "id": "encode", "title": "ffmpeg · encode", "bubble": "Make the MP4", "model": "ffmpeg",
+        "lines": ["1080×1920 · 30 fps", "H.264 + AAC"] }
+    ]
+  },
+
+  "lines": [
+    { "who": "sam", "text": "Wait. Was this whole video made with code?", "mood": "curious" },
+    { "who": "buddy", "text": "Every single frame. No editing app. No camera.", "mood": "happy" },
+    { "who": "sam", "text": "Okay. So how does it work?", "mood": "skeptical" },
+    { "who": "buddy", "text": "One function draws the whole scene at any moment: renderFrame(t).",
+      "say": "One function draws the whole scene at any moment. Render frame of t.",
+      "screen": { "panel": "render", "bubble": "Draw frame t", "type": ["renderFrame(t)", "t = {t}s", "frame {frame} / {frames}"] } },
+    { "who": "buddy", "text": "The camera, the captions, even my blinking. All computed from t.", "mood": "calm" },
+    { "who": "sam", "text": "Nothing random?", "mood": "surprised" },
+    { "who": "buddy", "text": "Nothing reads the clock. Same t in, same picture out. Every time.", "mood": "serious", "shot": "close",
+      "screen": { "panel": "rules", "bubble": "Keep it exact", "type": ["No clock reads", "No Math.random()", "Same t → same pixels"] } },
+    { "who": "sam", "text": "Then how does it turn into an MP4?", "mood": "thinking", "shot": "two" },
+    { "who": "buddy", "text": "A headless browser asks for frame zero and saves it. Then frame one. And so on.",
+      "screen": { "panel": "capture", "bubble": "Save every frame", "type": ["open index.html", "frame {frame}.png  saved"] } },
+    { "who": "buddy", "text": "Then ffmpeg stitches the frames together and adds the voices.", "shot": "two",
+      "say": "Then F F mpeg stitches the frames together and adds the voices.",
+      "screen": { "panel": "encode", "bubble": "Make the MP4", "type": ["frames + audio", "→ demo.mp4"] } },
+    { "who": "sam", "text": "So I could make my own?", "mood": "happy" },
+    { "who": "buddy", "text": "Write the lines in a script file. Run one command. Post it.", "mood": "happy",
+      "screen": { "panel": "script", "bubble": "Write the dialogue", "type": ["edit videos/my-video.json", "npm run render"] } },
+    { "who": "sam", "text": "Okay. I'm making ten of these tonight.", "mood": "happy", "gesture": "point" }
+  ]
+}

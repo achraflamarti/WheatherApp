@@ -130,6 +130,7 @@ npm run render -- videos/my-video.json [options]
   --sheet [n]          contact sheet of n stills (default 12) -> out/<name>/sheet.jpg
   --voices babble|tts|none
   --cpu                force software rendering (exact on every machine, but slow)
+  --crf 20             H.264 quality, 0-51: lower is better and bigger (18 for a master, 24 to share)
   --workers 2          render with several browser pages at once (can help with a GPU)
   --out path.mp4       output file
 ```

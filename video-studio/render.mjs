@@ -11,7 +11,8 @@
 //
 // Other options: --from 10 --to 20 (seconds), --workers 2 (parallel pages),
 // --voices babble|tts|none (override script.audio.voices), --cpu (force the
-// software renderer even if you have a GPU), --out path.mp4
+// software renderer even if you have a GPU), --crf 20 (quality: lower = bigger
+// file), --out path.mp4
 
 import { spawn } from 'node:child_process';
 import crypto from 'node:crypto';
@@ -299,7 +300,7 @@ async function main() {
     if (hasAudio) args.push('-map', '1:a', '-c:a', 'aac', '-b:a', '192k', '-ac', '2');
     args.push(
       '-vf', 'scale=out_color_matrix=bt709:out_range=tv,format=yuv420p',
-      '-c:v', 'libx264', '-preset', 'fast', '-crf', '17',
+      '-c:v', 'libx264', '-preset', 'fast', '-crf', String(opts.crf || 20),
       '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709',
       '-movflags', '+faststart', outFile,
     );
